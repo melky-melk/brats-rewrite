@@ -18,7 +18,7 @@ from generative.losses.adversarial_loss import PatchAdversarialLoss
 from generative.losses.perceptual import PerceptualLoss
 from generative.networks.nets import AutoencoderKL, PatchDiscriminator # , DiffusionModelUNet
 
-from cycling_utils import InterruptableDistributedSampler, Timer
+import timer
 from loops_0 import train_generator_one_epoch, evaluate_generator
 import utils
 
