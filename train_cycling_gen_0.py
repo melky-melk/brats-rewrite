@@ -25,16 +25,21 @@ import utils
 def get_args_parser(add_help=True):
     import argparse
 
+    import argparse
     parser = argparse.ArgumentParser(description="Latent Diffusion Model Training", add_help=add_help)
-
     parser.add_argument("--resume", type=str, help="path of checkpoint", required=True) # for checkpointing
     parser.add_argument("--prev-resume", default=None, help="path of previous job checkpoint for strong fail resume", dest="prev_resume") # for checkpointing
+    parser.add_argument("--tboard-path", default=None, help="path for saving tensorboard logs", dest="tboard_path") # for checkpointing
     parser.add_argument("--data-path", default="/mnt/Datasets/Open-Datasets/MONAI", type=str, help="dataset path", dest="data_path")
     parser.add_argument("--device", default="cuda", type=str, help="device (Use cuda or cpu Default: cuda)")
     parser.add_argument("--start-epoch", default=0, type=int, metavar="N", help="start epoch")
     parser.add_argument("--dist-url", default="env://", type=str, help="url used to set up distributed training")
     parser.add_argument("-j", "--workers", default=16, type=int, metavar="N", help="number of data loading workers (default: 16)")
- 
+    parser.add_argument("--lr", default=5e-5, type=float, help="initial learning rate")
+    parser.add_argument("--kl-weight",default=1e-6,type=float, help="kl loss weight for generator", dest="kl_weight")
+    parser.add_argument("--perceptual-weight",default=1.0,type=float, help="perceptual loss weight for generator", dest="perceptual_weight")
+    parser.add_argument("--adv-weight",default=0.5,type=float, help="adversarial loss weight for generator", dest="adv_weight")
+    
     return parser
 
 timer.report('importing everything else')
