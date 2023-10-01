@@ -23,15 +23,24 @@ def compute_kl_loss(z_mu, z_sigma):
 intensity_loss = torch.nn.L1Loss()
 adv_loss = PatchAdversarialLoss(criterion="least_squares")
 
-def generator_loss(gen_images, real_images, z_mu, z_sigma, disc_net, perceptual_loss, kl_weight, perceptual_weight, adv_weight):
+def generator_loss(gen_images, real_images, z_mu, z_sigma, perceptual_loss, kl_weight, perceptual_weight):
     # Image intrinsic qualities
     # recons_loss = intensity_loss(gen_images, real_images)
     recons_loss = F.l1_loss(gen_images.float(), real_images.float())
     kl_loss = compute_kl_loss(z_mu, z_sigma)
     p_loss = perceptual_loss(gen_images.float(), real_images.float())
     loss_g = recons_loss + (kl_weight * kl_loss) + (perceptual_weight * p_loss)
-    # Discrimnator-based loss
     return loss_g
+
+    # # Image intrinsic qualities
+    # recons_loss = intensity_loss(gen_images, real_images)
+    # kl_loss = compute_kl_loss(z_mu, z_sigma)
+    # p_loss = perceptual_loss(gen_images.float(), real_images.float())
+    # loss_g = recons_loss + (kl_weight * kl_loss) + (perceptual_weight * p_loss)
+    # # Discrimnator-based loss
+    # logits_fake = disc_net(gen_images)[-1]
+    # generator_loss = adv_loss(logits_fake, target_is_real=True, for_discriminator=False)
+    # loss_g = loss_g + (adv_weight * generator_loss)
 
 def discriminator_loss(gen_images, real_images, discriminator, adv_weight):
     logits_fake = discriminator(gen_images.contiguous().detach())[-1]
@@ -77,15 +86,15 @@ def train_generator_one_epoch(
         reconstruction, z_mu, z_sigma = generator(images)
         timer.report(f'train batch {train_step} generator forward')
 
-        
-        loss_g = generator_loss(
-            reconstruction, images, z_mu, z_sigma, discriminator, perceptual_loss, 
-            args.kl_weight, args.perceptual_weight, args.adv_weight
-        )
+        loss_g = generator_loss(reconstruction, images, z_mu, z_sigma, perceptual_loss, kl_weight, perceptual_weight)
+
+        # loss_g = generator_loss(reconstruction, images, z_mu, z_sigma, perceptual_loss, args.kl_weight, args.perceptual_weight)
+
+        # discriminator based loss only occurs with this condition? idk it was in the tutorial
         if epoch > generator_warm_up_n_epochs:
             logits_fake = discriminator(reconstruction.contiguous().float())[-1]
-            generator_loss = adv_loss(logits_fake, target_is_real=True, for_discriminator=False)
-            loss_g += adv_weight * generator_loss
+            gen_loss = adv_loss(logits_fake, target_is_real=True, for_discriminator=False)
+            loss_g += adv_weight * gen_loss
 
         timer.report(f'train batch {train_step} generator loss: {loss_g.item():.3f}')
 
