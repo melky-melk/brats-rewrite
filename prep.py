@@ -3,8 +3,8 @@ print("Downloadning BraTS2016/17")
 from monai.apps import DecathlonDataset
 from generative.losses.perceptual import PerceptualLoss
 
-# _ = DecathlonDataset(root_dir="/mnt/Datasets/Open-Datasets/MONAI", task="Task01_BrainTumour", section="training", download=True)
-_ = DecathlonDataset(root_dir="/mnt/.node1/Open-Datsets/MONAI", task="Task01_BrainTumour", section="training", download=True)
+_ = DecathlonDataset(root_dir="/mnt/Datasets/Open-Datasets/MONAI", task="Task01_BrainTumour", section="training", download=True)
+# _ = DecathlonDataset(root_dir="/mnt/.node1/Open-Datsets/MONAI", task="Task01_BrainTumour", section="training", download=True)
 
 perceptual_loss = PerceptualLoss(
     spatial_dims=3, 
