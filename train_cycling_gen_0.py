@@ -1,7 +1,7 @@
 from cycling_utils import TimestampedTimer
 
 timer = TimestampedTimer()
-timer.report('importing Timer')
+timer.report('importing TimestampedTimer')
 
 import os
 
@@ -18,7 +18,9 @@ from generative.losses.adversarial_loss import PatchAdversarialLoss
 from generative.losses.perceptual import PerceptualLoss
 from generative.networks.nets import AutoencoderKL, PatchDiscriminator # , DiffusionModelUNet
 
-from cycling_utils import InterruptableDistributedSampler, MetricsTracker
+# NOTE USE THESE METRICS TRACKER ONCE IT RUNS   
+# from cycling_utils import InterruptableDistributedSampler, MetricsTracker, TimestampedTimer
+from cycling_utils import InterruptableDistributedSampler, TimestampedTimer
 from loops_0 import train_generator_one_epoch, evaluate_generator
 import utils
 
@@ -252,7 +254,7 @@ def main(args, timer):
         print('\n')
 
         with train_sampler.in_epoch(epoch):
-            timer = Timer("Start training")
+            timer = TimestampedTimer("Start training")
             # takes from the loops.py it does the actual model training
             generator, timer, metrics = train_generator_one_epoch(
                 args, epoch, generator, discriminator, optimizer_g, optimizer_d, train_sampler, val_sampler,
@@ -262,7 +264,7 @@ def main(args, timer):
 
             if epoch % gen_val_interval == 0: # Eval every epoch
                 with val_sampler.in_epoch(epoch):
-                    timer = Timer("Start evaluation")
+                    timer = TimestampedTimer("Start evaluation")
                     timer, metrics = evaluate_generator(
                         args, epoch, generator, discriminator, optimizer_g, optimizer_d, train_sampler, val_sampler,
                         scaler_g, scaler_d, train_loader, val_loader, perceptual_loss, adv_loss, device, timer, metrics
