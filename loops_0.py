@@ -23,14 +23,14 @@ def compute_kl_loss(z_mu, z_sigma):
 intensity_loss = torch.nn.L1Loss()
 adv_loss = PatchAdversarialLoss(criterion="least_squares")
 
-def generator_loss(gen_images, real_images, z_mu, z_sigma, perceptual_loss, kl_weight, perceptual_weight):
-    # Image intrinsic qualities
-    # recons_loss = intensity_loss(gen_images, real_images)
-    recons_loss = F.l1_loss(gen_images.float(), real_images.float())
-    kl_loss = compute_kl_loss(z_mu, z_sigma)
-    p_loss = perceptual_loss(gen_images.float(), real_images.float())
-    loss_g = recons_loss + (kl_weight * kl_loss) + (perceptual_weight * p_loss)
-    return loss_g
+# def generator_loss(gen_images, real_images, z_mu, z_sigma, perceptual_loss, kl_weight, perceptual_weight):
+#     # Image intrinsic qualities
+#     # recons_loss = intensity_loss(gen_images, real_images)
+#     recons_loss = F.l1_loss(gen_images.float(), real_images.float())
+#     kl_loss = compute_kl_loss(z_mu, z_sigma)
+#     p_loss = perceptual_loss(gen_images.float(), real_images.float())
+#     loss_g = recons_loss + (kl_weight * kl_loss) + (perceptual_weight * p_loss)
+#     return loss_g
 
     # # Image intrinsic qualities
     # recons_loss = intensity_loss(gen_images, real_images)
@@ -42,15 +42,15 @@ def generator_loss(gen_images, real_images, z_mu, z_sigma, perceptual_loss, kl_w
     # generator_loss = adv_loss(logits_fake, target_is_real=True, for_discriminator=False)
     # loss_g = loss_g + (adv_weight * generator_loss)
 
-def discriminator_loss(gen_images, real_images, discriminator, adv_weight):
-    logits_fake = discriminator(gen_images.contiguous().detach())[-1]
-    loss_d_fake = adv_loss(logits_fake, target_is_real=False, for_discriminator=True)
-    logits_real = discriminator(real_images.contiguous().detach())[-1]
-    loss_d_real = adv_loss(logits_real, target_is_real=True, for_discriminator=True)
-    discriminator_loss = (loss_d_fake + loss_d_real) * 0.5
+# def discriminator_loss(gen_images, real_images, discriminator, adv_weight):
+#     logits_fake = discriminator(gen_images.contiguous().detach())[-1]
+#     loss_d_fake = adv_loss(logits_fake, target_is_real=False, for_discriminator=True)
+#     logits_real = discriminator(real_images.contiguous().detach())[-1]
+#     loss_d_real = adv_loss(logits_real, target_is_real=True, for_discriminator=True)
+#     discriminator_loss = (loss_d_fake + loss_d_real) * 0.5
 
-    loss_d = adv_weight * discriminator_loss
-    return loss_d
+#     loss_d = adv_weight * discriminator_loss
+#     return loss_d
 
 ## -- AUTO-ENCODER - ##
 # this training sequence was taken offf of monai's tutorial code
@@ -86,7 +86,14 @@ def train_generator_one_epoch(
         reconstruction, z_mu, z_sigma = generator(images)
         timer.report(f'train batch {train_step} generator forward')
 
-        loss_g = generator_loss(reconstruction, images, z_mu, z_sigma, perceptual_loss, kl_weight, perceptual_weight)
+        # recons_loss = F.l1_loss(reconstruction.float(), images.float())
+        # loss_g = generator_loss(reconstruction, images, z_mu, z_sigma, perceptual_loss, kl_weight, perceptual_weight)
+
+        kl_loss = KL_loss(z_mu, z_sigma)
+
+        recons_loss = F.l1_loss(reconstruction.float(), images.float())
+        p_loss = perceptual_loss(reconstruction.float(), images.float())
+        loss_g = recons_loss + kl_weight * kl_loss + perceptual_weight * p_loss
 
         # loss_g = generator_loss(reconstruction, images, z_mu, z_sigma, perceptual_loss, args.kl_weight, args.perceptual_weight)
 
@@ -107,7 +114,13 @@ def train_generator_one_epoch(
 
         ##########################TRAIN DISCRIMINATOR######################
         if epoch > generator_warm_up_n_epochs:  # Train generator for n epochs before starting discriminator training
-            loss_d = discriminator_loss(reconstruction, images, discriminator, adv_weight)
+            logits_fake = discriminator(reconstruction.contiguous().detach())[-1]
+            loss_d_fake = adv_loss(logits_fake, target_is_real=False, for_discriminator=True)
+            logits_real = discriminator(images.contiguous().detach())[-1]
+            loss_d_real = adv_loss(logits_real, target_is_real=True, for_discriminator=True)
+            discriminator_loss = (loss_d_fake + loss_d_real) * 0.5
+
+            loss_d = adv_weight * discriminator_loss
             timer.report(f'train batch {train_step} discriminator loss {loss_d.item():.3f}')
             # NOTE SCALAR STUFF IS COMMENTED OUT ADD BACK IN LATER WHEN ITS WORKING
             # scaler_d.scale(loss_d).backward()
@@ -126,7 +139,8 @@ def train_generator_one_epoch(
         # Reduce metrics accross nodes
         metrics["train"].update({"train_images_seen":len(images), "epoch_loss":recons_loss.item()})
         if epoch > generator_warm_up_n_epochs:
-            metrics["train"].update({"gen_epoch_loss":generator_loss.item(), "disc_epoch_loss":discriminator_loss.item()})
+            metrics["train"].update({"gen_epoch_loss":gen_loss.item(), "disc_epoch_loss":discriminator_loss.item()})
+
         metrics["train"].reduce_and_reset_local()
 
         timer.report(f'train batch {train_step} metrics update')
@@ -170,6 +184,9 @@ def train_generator_one_epoch(
             }
             timer = atomic_torch_save(checkpoint, args.resume, timer)
 
+    gen_loss = metrics["train"].epoch_reports[-1]["loss_g"] / metrics["train"].epoch_reports[-1]["train_images_seen"]
+    disc_loss = metrics["train"].epoch_reports[-1]["loss_d"] / metrics["train"].epoch_reports[-1]["train_images_seen"]
+    print("Epoch [{}] :: gen_loss: {:,.3f}, disc_loss: {:,.3f}".format(epoch, gen_loss, disc_loss))
     return generator, timer, metrics
 
 # is just checkpoint?? taking the L1 loss comparison between the input and putput images
