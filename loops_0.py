@@ -101,8 +101,8 @@ def train_generator_one_epoch(
         # discriminator based loss only occurs with this condition? idk it was in the tutorial
         if epoch > generator_warm_up_n_epochs:
             logits_fake = discriminator(reconstruction.contiguous().float())[-1]
-            gen_loss = adv_loss(logits_fake, target_is_real=True, for_discriminator=False)
-            loss_g += adv_weight * gen_loss
+            generator_loss = adv_loss(logits_fake, target_is_real=True, for_discriminator=False)
+            loss_g += adv_weight * generator_loss
 
         timer.report(f'train batch {train_step} generator loss: {loss_g.item():.3f}')
 
@@ -140,9 +140,10 @@ def train_generator_one_epoch(
         # Reduce metrics accross nodes
         metrics["train"].update({"train_images_seen":len(images), "epoch_loss":recons_loss.item()})
         if epoch > generator_warm_up_n_epochs:
-            metrics["train"].update({"gen_epoch_loss":gen_loss.item(), "disc_epoch_loss":discriminator_loss.item()})
+            metrics["train"].update({"gen_epoch_loss":generator_loss.item(), "disc_epoch_loss":discriminator_loss.item()})
 
-        metrics["train"].reduce_and_reset_local()
+        metrics["train"].reduce()
+        metrics["train"].reset_local()
 
         timer.report(f'train batch {train_step} metrics update')
 

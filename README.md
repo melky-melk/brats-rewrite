@@ -12,3 +12,23 @@ So with this model it is creating a 3d model based on the slices of mri brain th
 - loops is where the MONAI code is stored, most of it can be found in the MONAI tutorials documentation, that is where the actual information is trained.
 
 - prep.py saves all of the data or downloads it so we can use it. we only need to run this once before we do the actual model otherwise its going to take too long to run. run with `python prep.py`
+
+## Installation
+
+first you gotta install the requirements in the overall isc-demos, then you get the setup from monai https://github.com/Project-MONAI/GenerativeModels/tree/main 
+
+```python
+from __future__ import annotations
+
+from setuptools import find_packages, setup
+
+setup(
+    name="generative",
+    packages=find_packages(exclude=[]),
+    version="0.2.2",
+    description="Installer to help to use the prototypes from MONAI generative models in other projects.",
+    install_requires=["monai>=1.2.0rc1"],
+)
+```
+
+another txt file required for the monai code
