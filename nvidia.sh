@@ -1,0 +1,23 @@
+pip uninstall nvidia-cuda-cupti-cu12 
+pip uninstall nvidia-cuda-nvrtc-cu12 
+pip uninstall nvidia-cuda-runtime-cu12
+pip uninstall nvidia-cudnn-cu12        
+pip uninstall nvidia-cufft-cu12         
+pip uninstall nvidia-curand-cu12        
+pip uninstall nvidia-cusolver-cu12      
+pip uninstall nvidia-cusparse-cu12      
+pip uninstall nvidia-nccl-cu12       
+pip uninstall nvidia-nvjitlink-cu12  
+pip uninstall nvidia-nvtx-cu12       
+
+pip install  nvidia-cublas-cu11       
+pip install  nvidia-cuda-cupti-cu11   
+pip install  nvidia-cuda-nvrtc-cu11   
+pip install  nvidia-cuda-runtime-cu11 
+pip install  nvidia-cudnn-cu11        
+pip install  nvidia-cufft-cu11        
+pip install  nvidia-curand-cu11       
+pip install  nvidia-cusolver-cu11    
+pip install  nvidia-cusparse-cu11     
+pip install  nvidia-nccl-cu11         
+pip install  nvidia-nvtx-cu11         

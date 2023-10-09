@@ -1,6 +1,6 @@
 experiment_name="brats_mri_3d_gen"
 gpu_type="24GB VRAM GPU"
 nnodes = 1
-venv_path = "~/.venv/bin/activate"
-output_path = "~/outputs/brats_mri_3d_gen"
+venv_path = "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/bin/activate"
+output_path = "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/isc-demos/brats-rewrite/outputs/brats_mri_3d_gen"
 command="train_cycling_gen_0.py --lr 1e-5 --data-path=/mnt/.node1/Open-Datasets/MONAI --resume $OUTPUT_PATH/checkpoint.isc --tboard-path $OUTPUT_PATH/tb"
