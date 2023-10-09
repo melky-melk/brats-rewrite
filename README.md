@@ -17,18 +17,9 @@ So with this model it is creating a 3d model based on the slices of mri brain th
 
 first you gotta install the requirements in the overall isc-demos, then you get the setup from monai https://github.com/Project-MONAI/GenerativeModels/tree/main 
 
-```python
-from __future__ import annotations
+i got an error that lead me to here
+https://docs.monai.io/en/latest/installation.html#installing-the-recommended-dependencies 
 
-from setuptools import find_packages, setup
+so i went inside generative and took their requirements-dev, and colated it in the monai_requirements.txt
 
-setup(
-    name="generative",
-    packages=find_packages(exclude=[]),
-    version="0.2.2",
-    description="Installer to help to use the prototypes from MONAI generative models in other projects.",
-    install_requires=["monai>=1.2.0rc1"],
-)
-```
-
-another txt file required for the monai code
+download using `pip install -r monai-requirements.txt`
