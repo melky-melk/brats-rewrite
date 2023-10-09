@@ -1,0 +1,94 @@
+[2023-10-09 06:24:43,317] torch.distributed.run: [WARNING] 
+[2023-10-09 06:24:43,317] torch.distributed.run: [WARNING] *****************************************
+[2023-10-09 06:24:43,317] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2023-10-09 06:24:43,317] torch.distributed.run: [WARNING] *****************************************
+[ 2023-10-09 06:24:44 ] Completed Start                                                                        0.000 ms,         0.00 s total
+[ 2023-10-09 06:24:44 ] Completed importing TimestampedTimer                                                   0.020 ms,         0.00 s total
+Traceback (most recent call last):
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/isc-demos/brats-rewrite/train_cycling_gen_0.py", line 17, in <module>
+    from generative.losses.adversarial_loss import PatchAdversarialLoss
+ModuleNotFoundError: No module named 'generative'
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/isc-demos/brats-rewrite/train_cycling_gen_0.py", line 17, in <module>
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/isc-demos/brats-rewrite/train_cycling_gen_0.py", line 17, in <module>
+        from generative.losses.adversarial_loss import PatchAdversarialLossfrom generative.losses.adversarial_loss import PatchAdversarialLoss
+
+ModuleNotFoundErrorModuleNotFoundError: No module named 'generative': 
+No module named 'generative'
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/isc-demos/brats-rewrite/train_cycling_gen_0.py", line 17, in <module>
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/isc-demos/brats-rewrite/train_cycling_gen_0.py", line 17, in <module>
+Traceback (most recent call last):
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/isc-demos/brats-rewrite/train_cycling_gen_0.py", line 17, in <module>
+        from generative.losses.adversarial_loss import PatchAdversarialLossfrom generative.losses.adversarial_loss import PatchAdversarialLoss
+
+ModuleNotFoundErrorModuleNotFoundError: No module named 'generative': 
+No module named 'generative'
+    from generative.losses.adversarial_loss import PatchAdversarialLoss
+ModuleNotFoundError: No module named 'generative'
+[2023-10-09 06:24:53,332] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 0 (pid: 2696280) of binary: /mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/bin/python
+Traceback (most recent call last):
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/distributed/run.py", line 806, in main
+    run(args)
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/distributed/run.py", line 797, in run
+    elastic_launch(
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+train_cycling_gen_0.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2023-10-09_06:24:53
+  host      : sc9
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 2696281)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2023-10-09_06:24:53
+  host      : sc9
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 2696282)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2023-10-09_06:24:53
+  host      : sc9
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 2696283)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[4]:
+  time      : 2023-10-09_06:24:53
+  host      : sc9
+  rank      : 4 (local_rank: 4)
+  exitcode  : 1 (pid: 2696284)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[5]:
+  time      : 2023-10-09_06:24:53
+  host      : sc9
+  rank      : 5 (local_rank: 5)
+  exitcode  : 1 (pid: 2696285)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2023-10-09_06:24:53
+  host      : sc9
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2696280)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
