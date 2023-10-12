@@ -237,8 +237,8 @@ def main(args, timer):
         val_sampler.load_state_dict(checkpoint["val_sampler"])
         # Metrics
         metrics = checkpoint["metrics"]
-        metrics["train"].to(device)
-        metrics["val"].to(device)
+        # metrics["train"].to(device)
+        # metrics["val"].to(device)
 
     timer.report('checkpoint retrieval')
 
