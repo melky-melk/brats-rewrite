@@ -106,11 +106,11 @@ def train_generator_one_epoch(
 
         timer.report(f'train batch {train_step} generator loss: {loss_g.item():.3f}')
 
-        # scaler_g.scale(loss_g).backward()
-        # scaler_g.step(optimizer_g)
-        # scaler_g.update()
-        loss_g.backward()
-        optimizer_g.step()
+        scaler_g.scale(loss_g).backward()
+        scaler_g.step(optimizer_g)
+        scaler_g.update()
+        # loss_g.backward()
+        # optimizer_g.step()
         timer.report(f'train batch {train_step} generator backward')
 
         ##########################TRAIN DISCRIMINATOR######################
@@ -124,11 +124,11 @@ def train_generator_one_epoch(
             loss_d = adv_weight * discriminator_loss
             timer.report(f'train batch {train_step} discriminator loss {loss_d.item():.3f}')
             # NOTE SCALAR STUFF IS COMMENTED OUT ADD BACK IN LATER WHEN ITS WORKING
-            # scaler_d.scale(loss_d).backward()
-            # scaler_d.step(optimizer_d)
-            # scaler_d.update()
-            loss_d.backward()
-            optimizer_d.step()
+            scaler_d.scale(loss_d).backward()
+            scaler_d.step(optimizer_d)
+            scaler_d.update()
+            # loss_d.backward()
+            # optimizer_d.step()
             timer.report(f'train batch {train_step} discriminator backward')
 
         # NOTE TAKEN FROM THE TUTORIAL BUT DOESNT APPLY HERE 
@@ -143,15 +143,19 @@ def train_generator_one_epoch(
             metrics["train"].update({"gen_epoch_loss":generator_loss.item(), "disc_epoch_loss":discriminator_loss.item()})
 
         metrics["train"].reduce()
-        metrics["train"].reset_local()
 
         timer.report(f'train batch {train_step} metrics update')
 
-        recons_loss = metrics["train"].agg[metrics["train"].map["epoch_loss"]] / metrics["train"].agg[metrics["train"].map["train_images_seen"]]
-        gen_loss = metrics["train"].agg[metrics["train"].map["gen_epoch_loss"]] / metrics["train"].agg[metrics["train"].map["train_images_seen"]]
-        disc_loss = metrics["train"].agg[metrics["train"].map["disc_epoch_loss"]] / metrics["train"].agg[metrics["train"].map["train_images_seen"]]
-        print("Epoch [{}] Step [{}/{}] :: recons_loss: {:,.3f}, gen_loss: {:,.3f}, disc_loss: {:,.3f}".format(epoch, train_step+1, total_steps, recons_loss, gen_loss, disc_loss))
 
+        gen_loss = metrics["train"].local["loss_g"] / metrics["train"].local["train_images_seen"]
+        disc_loss = metrics["train"].local["loss_d"] / metrics["train"].local["train_images_seen"]
+        print("Epoch [{}] Step [{}/{}], gen_loss: {:.3f}, disc_loss: {:.3f}".format(epoch, train_step, total_steps, gen_loss, disc_loss))
+        # recons_loss = metrics["train"].local["loss"] / metrics["train"].local["images_seen"] 
+        # gen_loss = metrics["train"].agg[metrics["train"].map["gen_epoch_loss"]] / metrics["train"].agg[metrics["train"].map["train_images_seen"]]
+        # disc_loss = metrics["train"].agg[metrics["train"].map["disc_epoch_loss"]] / metrics["train"].agg[metrics["train"].map["train_images_seen"]]
+        metrics["train"].reset_local()
+
+        timer.report(f'train batch {train_step} metrics update')
         ## Checkpointing
         print(f"Saving checkpoint at epoch {epoch} train batch {train_step}")
         train_sampler.advance(len(images))
@@ -196,6 +200,7 @@ def train_generator_one_epoch(
 # the evaluate is that you give it a different set of data to make predictions on havent updated the weights and stuff
 # from the functional library. also logging the reconstructions from tensor board, giving qualitative picture
 # tensorboard runs locally.
+# this is where the reconstruction is evaluated after the epoch, the generator loss and discriminator is done in the above function
 def evaluate_generator(
         args, epoch, generator, discriminator, optimizer_g, optimizer_d, train_sampler, val_sampler,
         scaler_g, scaler_d, train_loader, val_loader, perceptual_loss, adv_loss, device, timer,
@@ -222,7 +227,8 @@ def evaluate_generator(
                 timer.report(f'eval batch {val_step} recons_loss')
 
             metrics["val"].update({"val_images_seen": len(images), "val_loss": recons_loss.item()})
-            metrics["val"].reduce_and_reset_local()
+            metrics["val"].reduce()
+            metrics["val"].reset_local()
 
             timer.report(f'eval batch {val_step} metrics update')
 
