@@ -27,8 +27,6 @@ import utils
 
 def get_args_parser(add_help=True):
     import argparse
-
-    import argparse
     parser = argparse.ArgumentParser(description="Latent Diffusion Model Training", add_help=add_help)
     parser.add_argument("--resume", type=str, help="path of checkpoint", required=True) # for checkpointing
     parser.add_argument("--prev-resume", default=None, help="path of previous job checkpoint for strong fail resume", dest="prev_resume") # for checkpointing
@@ -213,9 +211,11 @@ def main(args, timer):
     timer.report('grad scalers')
 
     # Init metric tracker
-    train_metrics = MetricsTracker(["train_images_seen", "epoch_loss", "gen_epoch_loss", "disc_epoch_loss"])
-    val_metrics = MetricsTracker(["val_images_seen", "val_loss"])
-    metrics = {'train': train_metrics, 'val': val_metrics}
+    # train_metrics = MetricsTracker(["train_images_seen", "epoch_loss", "gen_epoch_loss", "disc_epoch_loss"])
+    # train_metrics = MetricsTracker()
+    # val_metrics = MetricsTracker(["val_images_seen", "val_loss"])
+    # metrics = {'train': train_metrics, 'val': val_metrics}
+    metrics = {'train': MetricsTracker(), 'val': MetricsTracker()}
 
     # RETRIEVE CHECKPOINT
     Path(args.resume).parent.mkdir(parents=True, exist_ok=True)
