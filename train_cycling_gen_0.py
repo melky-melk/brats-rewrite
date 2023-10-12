@@ -19,8 +19,8 @@ from generative.losses.perceptual import PerceptualLoss
 from generative.networks.nets import AutoencoderKL, PatchDiscriminator # , DiffusionModelUNet
 
 # NOTE USE THESE METRICS TRACKER ONCE IT RUNS   
-# from cycling_utils import InterruptableDistributedSampler, MetricsTracker, TimestampedTimer
-from cycling_utils import InterruptableDistributedSampler, TimestampedTimer
+from cycling_utils import InterruptableDistributedSampler, MetricsTracker, TimestampedTimer
+# from cycling_utils import InterruptableDistributedSampler, TimestampedTimer
 # import loops_0
 from loops_0 import train_generator_one_epoch, evaluate_generator
 import utils
@@ -52,36 +52,36 @@ timer.report('importing everything else')
 # updating all of the values in the local vector, then we are going to take it gather them together to reduce and reset. 
 # all reduce on a local object. everyone who has a self.local exchanges with every opther machine everyone elses machine. dumps into a binary. 
 # so its going to sum everything up and add it together
-class MetricsTracker:
+# class MetricsTracker:
 
-    def __init__(self, metric_names):
-        self.map = {n:i for i,n in enumerate(metric_names)}
-        # every machine has its own self.local value, which is just an array with a bunch of 0's during the training process, these local variables are added to
-        self.local = torch.zeros(len(metric_names), dtype=torch.float16, requires_grad=False, device='cuda')
-        # self.agg meaning aggrigate which is a storage of all the values, a running total of the information collected thus far
-        # we only care about the main machines self.add
-        self.agg = torch.zeros(len(metric_names), dtype=torch.float16, requires_grad=False, device='cuda')
-        self.epoch_reports = []
+#     def __init__(self, metric_names):
+#         self.map = {n:i for i,n in enumerate(metric_names)}
+#         # every machine has its own self.local value, which is just an array with a bunch of 0's during the training process, these local variables are added to
+#         self.local = torch.zeros(len(metric_names), dtype=torch.float16, requires_grad=False, device='cuda')
+#         # self.agg meaning aggrigate which is a storage of all the values, a running total of the information collected thus far
+#         # we only care about the main machines self.add
+#         self.agg = torch.zeros(len(metric_names), dtype=torch.float16, requires_grad=False, device='cuda')
+#         self.epoch_reports = []
 
-    def update(self, metrics: dict):
-        for n,v in metrics.items():
-            self.local[self.map[n]] += v
+#     def update(self, metrics: dict):
+#         for n,v in metrics.items():
+#             self.local[self.map[n]] += v
     
-    # this is where all of our values are being collated
-    def reduce_and_reset_local(self):
-        # Reduce over all nodes, add that to local store, and reset local
-        dist.all_reduce(self.local, op=dist.ReduceOp.SUM)
-        self.agg += self.local
-        self.local = torch.zeros(len(self.local), dtype=torch.float16, requires_grad=False, device='cuda')
+#     # this is where all of our values are being collated
+#     def reduce_and_reset_local(self):
+#         # Reduce over all nodes, add that to local store, and reset local
+#         dist.all_reduce(self.local, op=dist.ReduceOp.SUM)
+#         self.agg += self.local
+#         self.local = torch.zeros(len(self.local), dtype=torch.float16, requires_grad=False, device='cuda')
     
-    def end_epoch(self):
-        self.epoch_reports.append(self.agg)
-        self.local = torch.zeros(len(self.local), dtype=torch.float16, requires_grad=False, device='cuda')
-        self.agg = torch.zeros(len(self.local), dtype=torch.float16, requires_grad=False, device='cuda')
+#     def end_epoch(self):
+#         self.epoch_reports.append(self.agg)
+#         self.local = torch.zeros(len(self.local), dtype=torch.float16, requires_grad=False, device='cuda')
+#         self.agg = torch.zeros(len(self.local), dtype=torch.float16, requires_grad=False, device='cuda')
 
-    def to(self, device):
-        self.local = self.local.to(device)
-        self.agg = self.agg.to(device)
+#     def to(self, device):
+#         self.local = self.local.to(device)
+#         self.agg = self.agg.to(device)
 
 def main(args, timer):
 

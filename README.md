@@ -25,8 +25,10 @@ https://docs.monai.io/en/latest/installation.html#installing-the-recommended-dep
 so i went inside generative and took their requirements-dev, and colated it in the monai-requirements.txt
 
 download using `pip install -r monai-requirements.txt`
-if you are still having issues try pip install monai['all']
+if you are still having issues try 
+pip install monai['all']
+this should install all the generative files and the readers
 
-using the new isc you need to reinstall CUDA and torch since a new update came out that makes the previous nvidia drivers incompatible
+using the new isc you need to reinstall CUDA and torch since a new update came out that makes the previous nvidia drivers incompatible with torch 2.1.0
 
 `pip install torch==2.0.1+cu118 torchvision==0.15.2+cu118 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118``
