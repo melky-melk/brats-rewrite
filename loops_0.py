@@ -133,15 +133,12 @@ def train_generator_one_epoch(
 
         # NOTE TAKEN FROM THE TUTORIAL BUT DOESNT APPLY HERE 
         # epoch_loss += recons_loss.item()
-        # if epoch > generator_warm_up_n_epochs:
+        # if epoch > generator_warm_up_n_epochs
         #     gen_epoch_loss += generator_loss.item()
         #     disc_epoch_loss += discriminator_loss.item()
         
         # Reduce metrics accross nodes
-        metrics["train"].update({"train_images_seen":len(images), "epoch_loss":recons_loss.item()})
-        if epoch > generator_warm_up_n_epochs:
-            metrics["train"].update({"gen_epoch_loss":generator_loss.item(), "disc_epoch_loss":discriminator_loss.item()})
-
+        metrics["train"].update({"train_images_seen":len(images), "loss_g":loss_g.item(), "loss_d": loss_d.item()})
         metrics["train"].reduce()
 
         timer.report(f'train batch {train_step} metrics update')
