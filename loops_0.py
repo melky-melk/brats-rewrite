@@ -114,22 +114,22 @@ def train_generator_one_epoch(
         timer.report(f'train batch {train_step} generator backward')
 
         ##########################TRAIN DISCRIMINATOR######################
-        if epoch > generator_warm_up_n_epochs:  # Train generator for n epochs before starting discriminator training
-            logits_fake = discriminator(reconstruction.contiguous().detach())[-1]
-            loss_d_fake = adv_loss(logits_fake, target_is_real=False, for_discriminator=True)
-            logits_real = discriminator(images.contiguous().detach())[-1]
-            loss_d_real = adv_loss(logits_real, target_is_real=True, for_discriminator=True)
-            discriminator_loss = (loss_d_fake + loss_d_real) * 0.5
+        # if epoch > generator_warm_up_n_epochs:  # Train generator for n epochs before starting discriminator training
+        logits_fake = discriminator(reconstruction.contiguous().detach())[-1]
+        loss_d_fake = adv_loss(logits_fake, target_is_real=False, for_discriminator=True)
+        logits_real = discriminator(images.contiguous().detach())[-1]
+        loss_d_real = adv_loss(logits_real, target_is_real=True, for_discriminator=True)
+        discriminator_loss = (loss_d_fake + loss_d_real) * 0.5
 
-            loss_d = adv_weight * discriminator_loss
-            timer.report(f'train batch {train_step} discriminator loss {loss_d.item():.3f}')
-            # NOTE SCALAR STUFF IS COMMENTED OUT ADD BACK IN LATER WHEN ITS WORKING
-            scaler_d.scale(loss_d).backward()
-            scaler_d.step(optimizer_d)
-            scaler_d.update()
-            # loss_d.backward()
-            # optimizer_d.step()
-            timer.report(f'train batch {train_step} discriminator backward')
+        loss_d = adv_weight * discriminator_loss
+        timer.report(f'train batch {train_step} discriminator loss {loss_d.item():.3f}')
+        # NOTE SCALAR STUFF IS COMMENTED OUT ADD BACK IN LATER WHEN ITS WORKING
+        scaler_d.scale(loss_d).backward()
+        scaler_d.step(optimizer_d)
+        scaler_d.update()
+        # loss_d.backward()
+        # optimizer_d.step()
+        timer.report(f'train batch {train_step} discriminator backward')
 
         # NOTE TAKEN FROM THE TUTORIAL BUT DOESNT APPLY HERE 
         # epoch_loss += recons_loss.item()
