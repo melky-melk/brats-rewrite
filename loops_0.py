@@ -76,7 +76,7 @@ def train_generator_one_epoch(
 
     # these are going to be very different between the models
     for step, batch in enumerate(train_loader):
-
+        
         images = batch["image"].to(device)
         timer.report(f'train batch {train_step} to device')
 
@@ -198,10 +198,80 @@ def train_generator_one_epoch(
 # from the functional library. also logging the reconstructions from tensor board, giving qualitative picture
 # tensorboard runs locally.
 # this is where the reconstruction is evaluated after the epoch, the generator loss and discriminator is done in the above function
+# def evaluate_generator(
+#         args, epoch, generator, discriminator, optimizer_g, optimizer_d, train_sampler, val_sampler,
+#         scaler_g, scaler_d, train_loader, val_loader, perceptual_loss, adv_loss, device, timer,
+#         metrics
+#     ):
+
+#     generator.eval()
+
+#     val_step = val_sampler.progress // val_loader.batch_size
+#     total_steps = int(len(val_sampler) / val_loader.batch_size)
+#     print(f'\nEvaluating / resuming epoch {epoch} from eval step {val_step}\n')
+
+#     with torch.no_grad():
+#         for batch in val_loader:
+
+#             images = batch["image"].to(device)
+#             timer.report(f'eval batch {val_step} to device')
+
+#             with autocast(enabled=True):
+
+#                 reconstruction, _, _ = generator(images)
+#                 timer.report(f'eval batch {val_step} forward')
+#                 recons_loss = F.l1_loss(images.float(), reconstruction.float())
+#                 timer.report(f'eval batch {val_step} recons_loss')
+
+#             metrics["val"].update({"val_images_seen": len(images), "val_loss": recons_loss.item()})
+#             metrics["val"].reduce()
+#             metrics["val"].reset_local()
+
+#             timer.report(f'eval batch {val_step} metrics update')
+
+#             ## Checkpointing
+#             print(f"Saving checkpoint at epoch {epoch} val batch {val_step}")
+#             val_sampler.advance(len(images))
+#             val_step = val_sampler.progress // val_loader.batch_size
+
+#             if val_step == total_steps:
+#                  metrics["val"].end_epoch()
+
+#             if utils.is_main_process() and val_step % 1 == 0: # Checkpointing every batch
+#                 print(f"Saving checkpoint at epoch {epoch} train batch {val_step}")
+#                 checkpoint = {
+#                     # Universals
+#                     "args": args,
+#                     "epoch": epoch,
+#                     # State variables
+#                     "generator": generator.module.state_dict(),
+#                     "discriminator": discriminator.module.state_dict(),
+#                     "optimizer_g": optimizer_g.state_dict(),
+#                     "optimizer_d": optimizer_d.state_dict(),
+#                     "scaler_g": scaler_g.state_dict(),
+#                     "scaler_d": scaler_d.state_dict(),
+#                     "train_sampler": train_sampler.state_dict(),
+#                     "val_sampler": val_sampler.state_dict(),
+#                     # Metrics
+#                     "metrics": metrics,
+#                 }
+#                 timer = atomic_torch_save(checkpoint, args.resume, timer)
+
+#     # val_loss = metrics["val"].agg[metrics["val"].map["val_loss"]] / metrics["val"].agg[metrics["val"].map["val_images_seen"]]
+#     val_loss = metrics["val"].epoch_reports[-1]["loss"] / metrics["val"].epoch_reports[-1]["images_seen"]
+#     if utils.is_main_process():
+#         writer = SummaryWriter(log_dir=tb_path)
+#         writer.add_scalar("val", val_loss, epoch)
+#         writer.flush()
+#         writer.close()
+#     print(f"Epoch {epoch} val loss: {val_loss:.4f}")
+
+#     return timer, metrics
+
+
 def evaluate_generator(
         args, epoch, generator, discriminator, optimizer_g, optimizer_d, train_sampler, val_sampler,
-        scaler_g, scaler_d, train_loader, val_loader, perceptual_loss, adv_loss, device, timer,
-        metrics
+        scaler_g, scaler_d, val_loader, device, timer, metrics
     ):
 
     generator.eval()
@@ -235,10 +305,30 @@ def evaluate_generator(
             val_step = val_sampler.progress // val_loader.batch_size
 
             if val_step == total_steps:
-                 metrics["val"].end_epoch()
+
+                val_loss = metrics["val"].agg["val_loss"] / metrics["val"].agg["val_images_seen"]
+                if utils.is_main_process():
+
+                    writer = SummaryWriter(log_dir=args.tboard_path)
+                    writer.add_scalar("Val/loss", val_loss, epoch)
+
+                    # images_list = torch.zeros((11*6, *images.shape[1:]), device=device, dtype=images.dtype)
+                    # reconstruction_list = torch.zeros((11*6, *reconstruction.shape[1:]), device=device, dtype=reconstruction.dtype)
+                    # dist.all_gather_into_tensor(images_list, images.clone())
+                    # dist.all_gather_into_tensor(reconstruction_list, reconstruction)
+                    # plottable = torch.cat((images_list[0:5],reconstruction_list[0:5]))
+                    # plottable = (plottable * 255).to(torch.uint8)
+                    plottable = torch.cat((images, reconstruction))
+                    grid = make_grid(plottable, nrow=2)
+                    writer.add_image('Val/images', grid, epoch)
+
+                    writer.flush()
+                    writer.close()
+
+                print(f"Epoch {epoch} val loss: {val_loss:.4f}")
+                metrics["val"].end_epoch()
 
             if utils.is_main_process() and val_step % 1 == 0: # Checkpointing every batch
-                print(f"Saving checkpoint at epoch {epoch} train batch {val_step}")
                 checkpoint = {
                     # Universals
                     "args": args,
@@ -257,17 +347,7 @@ def evaluate_generator(
                 }
                 timer = atomic_torch_save(checkpoint, args.resume, timer)
 
-    val_loss = metrics["val"].agg[metrics["val"].map["val_loss"]] / metrics["val"].agg[metrics["val"].map["val_images_seen"]]
-    if utils.is_main_process():
-        writer = SummaryWriter(log_dir=tb_path)
-        writer.add_scalar("val", val_loss, epoch)
-        writer.flush()
-        writer.close()
-    print(f"Epoch {epoch} val loss: {val_loss:.4f}")
-
     return timer, metrics
-
-
 
 ## -- DIFFUSION MODEL - ##
 
