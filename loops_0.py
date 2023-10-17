@@ -8,7 +8,7 @@ from cycling_utils import atomic_torch_save
 from torch.utils.tensorboard import SummaryWriter
 from generative.losses.adversarial_loss import PatchAdversarialLoss
 # tb_path = "/mnt/Client/StrongUniversity/USYD-04/usyd04_adam/output_brats_mri_2d_gen/tb"
-tb_path = "/mnt/Client/StrongUniversity/USYD-03/uni_ctan/outputs/brats_mri_3d_gen/tb"
+tb_path = "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy"
 
 def KL_loss(z_mu, z_sigma):
     kl_loss = 0.5 * torch.sum(z_mu.pow(2) + z_sigma.pow(2) - torch.log(z_sigma.pow(2)) - 1, dim=[1, 2, 3, 4])

@@ -1,0 +1,182 @@
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[ 2023-10-16 12:11:22 ] Completed Start                                                                        0.000 ms,         0.00 s total
+[ 2023-10-16 12:11:22 ] Completed importing TimestampedTimer                                                   0.022 ms,         0.00 s total
+Field "model_server_url" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+Field "model_server_url" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+Field "model_server_url" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+Field "model_server_url" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+Field "model_server_url" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+Field "model_server_url" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+[ 2023-10-16 12:11:27 ] Completed importing everything else                                                5,325.346 ms,         5.33 s total
+| distributed init (rank 0): env://
+| distributed init (rank 5): env://
+| distributed init (rank 1): env://
+| distributed init (rank 4): env://
+| distributed init (rank 3): env://
+| distributed init (rank 2): env://
+[ 2023-10-16 12:11:28 ] Completed preliminaries                                                            1,147.066 ms,         6.47 s total
+monai.transforms.io.dictionary LoadImaged.__init__:image_only: Current default value of argument `image_only=False` has been deprecated since version 1.1. It will be changed to `image_only=True` in version 1.3.
+monai.transforms.io.dictionary LoadImaged.__init__:image_only: Current default value of argument `image_only=False` has been deprecated since version 1.1. It will be changed to `image_only=True` in version 1.3.
+monai.transforms.io.dictionary LoadImaged.__init__:image_only: Current default value of argument `image_only=False` has been deprecated since version 1.1. It will be changed to `image_only=True` in version 1.3.
+monai.transforms.io.dictionary LoadImaged.__init__:image_only: Current default value of argument `image_only=False` has been deprecated since version 1.1. It will be changed to `image_only=True` in version 1.3.
+monai.transforms.io.dictionary LoadImaged.__init__:image_only: Current default value of argument `image_only=False` has been deprecated since version 1.1. It will be changed to `image_only=True` in version 1.3.
+monai.transforms.io.dictionary LoadImaged.__init__:image_only: Current default value of argument `image_only=False` has been deprecated since version 1.1. It will be changed to `image_only=True` in version 1.3.
+<class 'monai.transforms.utility.dictionary.AddChanneld'>: Class `AddChanneld` has been deprecated since version 0.8. It will be removed in version 1.3. please use MetaTensor data type and monai.transforms.EnsureChannelFirstd instead with `channel_dim='no_channel'`.
+<class 'monai.transforms.utility.dictionary.AddChanneld'>: Class `AddChanneld` has been deprecated since version 0.8. It will be removed in version 1.3. please use MetaTensor data type and monai.transforms.EnsureChannelFirstd instead with `channel_dim='no_channel'`.
+<class 'monai.transforms.utility.dictionary.AddChanneld'>: Class `AddChanneld` has been deprecated since version 0.8. It will be removed in version 1.3. please use MetaTensor data type and monai.transforms.EnsureChannelFirstd instead with `channel_dim='no_channel'`.
+<class 'monai.transforms.utility.dictionary.AddChanneld'>: Class `AddChanneld` has been deprecated since version 0.8. It will be removed in version 1.3. please use MetaTensor data type and monai.transforms.EnsureChannelFirstd instead with `channel_dim='no_channel'`.
+monai.transforms.utility.dictionary EnsureChannelFirstd.__init__:meta_keys: Argument `meta_keys` has been deprecated since version 0.9. not needed if image is type `MetaTensor`.
+monai.transforms.utility.dictionary EnsureChannelFirstd.__init__:meta_keys: Argument `meta_keys` has been deprecated since version 0.9. not needed if image is type `MetaTensor`.
+monai.transforms.utility.dictionary EnsureChannelFirstd.__init__:meta_keys: Argument `meta_keys` has been deprecated since version 0.9. not needed if image is type `MetaTensor`.
+monai.transforms.utility.dictionary EnsureChannelFirstd.__init__:meta_keys: Argument `meta_keys` has been deprecated since version 0.9. not needed if image is type `MetaTensor`.
+<class 'monai.transforms.utility.dictionary.AddChanneld'>: Class `AddChanneld` has been deprecated since version 0.8. It will be removed in version 1.3. please use MetaTensor data type and monai.transforms.EnsureChannelFirstd instead with `channel_dim='no_channel'`.
+monai.transforms.utility.dictionary EnsureChannelFirstd.__init__:meta_keys: Argument `meta_keys` has been deprecated since version 0.9. not needed if image is type `MetaTensor`.
+<class 'monai.transforms.utility.dictionary.AddChanneld'>: Class `AddChanneld` has been deprecated since version 0.8. It will be removed in version 1.3. please use MetaTensor data type and monai.transforms.EnsureChannelFirstd instead with `channel_dim='no_channel'`.
+monai.transforms.utility.dictionary EnsureChannelFirstd.__init__:meta_keys: Argument `meta_keys` has been deprecated since version 0.9. not needed if image is type `MetaTensor`.
+[ 2023-10-16 12:11:28 ] Completed build datasets                                                              14.405 ms,         6.49 s total
+[ 2023-10-16 12:11:28 ] Completed build samplers                                                               0.050 ms,         6.49 s total
+[ 2023-10-16 12:11:28 ] Completed build dataloaders                                                            0.130 ms,         6.49 s total
+[ 2023-10-16 12:11:28 ] Completed generator to device                                                         42.624 ms,         6.53 s total
+[ 2023-10-16 12:11:28 ] Completed discriminator to device                                                     30.655 ms,         6.56 s total
+The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=SqueezeNet1_1_Weights.IMAGENET1K_V1`. You can also use `weights=SqueezeNet1_1_Weights.DEFAULT` to get the most up-to-date weights.
+Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=SqueezeNet1_1_Weights.IMAGENET1K_V1`. You can also use `weights=SqueezeNet1_1_Weights.DEFAULT` to get the most up-to-date weights.
+The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=SqueezeNet1_1_Weights.IMAGENET1K_V1`. You can also use `weights=SqueezeNet1_1_Weights.DEFAULT` to get the most up-to-date weights.
+Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=SqueezeNet1_1_Weights.IMAGENET1K_V1`. You can also use `weights=SqueezeNet1_1_Weights.DEFAULT` to get the most up-to-date weights.
+Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=SqueezeNet1_1_Weights.IMAGENET1K_V1`. You can also use `weights=SqueezeNet1_1_Weights.DEFAULT` to get the most up-to-date weights.
+Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=SqueezeNet1_1_Weights.IMAGENET1K_V1`. You can also use `weights=SqueezeNet1_1_Weights.DEFAULT` to get the most up-to-date weights.
+[ 2023-10-16 12:11:28 ] Completed loss functions                                                              42.834 ms,         6.60 s total
+[ 2023-10-16 12:11:28 ] Completed models prepped for distribution                                             18.929 ms,         6.62 s total
+[ 2023-10-16 12:11:28 ] Completed optimizers                                                                   0.556 ms,         6.62 s total
+[ 2023-10-16 12:11:28 ] Completed grad scalers                                                                 0.024 ms,         6.62 s total
+[ 2023-10-16 12:11:28 ] Completed checkpoint retrieval                                                         0.299 ms,         6.62 s total
+
+
+EPOCH :: 0
+
+
+[ 2023-10-16 12:11:28 ] Completed Start training                                                               0.000 ms,         0.00 s total
+
+Training / resuming epoch 0 from training step 0
+
+[ 2023-10-16 12:11:32 ] Completed train batch 0 to device                                                  3,406.918 ms,         3.41 s total
+[ 2023-10-16 12:11:32 ] Completed train batch 0 generator forward                                            281.470 ms,         3.69 s total
+[ 2023-10-16 12:11:32 ] Completed train batch 0 generator loss: 0.508                                        305.984 ms,         3.99 s total
+Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 64, 64, 64]
+bucket_view.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:323.)
+Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 64, 64, 64]
+bucket_view.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:323.)
+Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 64, 64, 64]
+bucket_view.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:323.)
+Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 64, 64, 64]
+bucket_view.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:323.)
+Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 64, 64, 64]
+bucket_view.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:323.)
+Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 64, 64, 64]
+bucket_view.sizes() = [32, 64, 1, 1, 1], strides() = [64, 1, 1, 1, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:323.)
+[ 2023-10-16 12:11:33 ] Completed train batch 0 generator backward                                           755.303 ms,         4.75 s total
+[ 2023-10-16 12:11:33 ] Completed train batch 0 metrics update                                                 0.667 ms,         4.75 s total
+Epoch [0] Step [0/21], gen_loss: 0.000, disc_loss: 0.000
+[ 2023-10-16 12:11:33 ] Completed train batch 0 metrics update                                                 0.057 ms,         4.75 s total
+Saving checkpoint at epoch 0 train batch 0
+Traceback (most recent call last):
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/isc-demos/brats-rewrite/train_cycling_gen_0.py", line 278, in <module>
+    main(args, timer)
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/isc-demos/brats-rewrite/train_cycling_gen_0.py", line 260, in main
+    generator, timer, metrics = train_generator_one_epoch(
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/isc-demos/brats-rewrite/loops_0.py", line 169, in train_generator_one_epoch
+    writer = SummaryWriter(log_dir=tb_path)
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/utils/tensorboard/writer.py", line 247, in __init__
+    self._get_file_writer()
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/utils/tensorboard/writer.py", line 277, in _get_file_writer
+    self.file_writer = FileWriter(
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/utils/tensorboard/writer.py", line 76, in __init__
+    self.event_writer = EventFileWriter(
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/tensorboard/summary/writer/event_file_writer.py", line 72, in __init__
+    tf.io.gfile.makedirs(logdir)
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 907, in makedirs
+    return get_filesystem(path).makedirs(path)
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 208, in makedirs
+    os.makedirs(path, exist_ok=True)
+  File "/usr/lib/python3.10/os.py", line 215, in makedirs
+    makedirs(head, exist_ok=exist_ok)
+  File "/usr/lib/python3.10/os.py", line 215, in makedirs
+    makedirs(head, exist_ok=exist_ok)
+  File "/usr/lib/python3.10/os.py", line 215, in makedirs
+    makedirs(head, exist_ok=exist_ok)
+  File "/usr/lib/python3.10/os.py", line 225, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/mnt/Client/StrongUniversity/USYD-03/uni_ctan'
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 1767717 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 1767718 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 1767719 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 1767720 closing signal SIGTERM
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 1767721 closing signal SIGTERM
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 1767716) of binary: /mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/bin/python
+Traceback (most recent call last):
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy/.venv/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+train_cycling_gen_0.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2023-10-16_12:11:41
+  host      : sc9
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 1767716)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
