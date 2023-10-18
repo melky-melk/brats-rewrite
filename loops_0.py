@@ -76,6 +76,8 @@ def train_generator_one_epoch(
 
     # these are going to be very different between the models
     for step, batch in enumerate(train_loader):
+        if batch >= 2:
+            break 
         
         images = batch["image"].to(device)
         timer.report(f'train batch {train_step} to device')
@@ -318,9 +320,11 @@ def evaluate_generator(
                     # dist.all_gather_into_tensor(reconstruction_list, reconstruction)
                     # plottable = torch.cat((images_list[0:5],reconstruction_list[0:5]))
                     # plottable = (plottable * 255).to(torch.uint8)
-                    plottable = torch.cat((images, reconstruction))
-                    grid = make_grid(plottable, nrow=2)
-                    writer.add_image('Val/images', grid, epoch)
+
+
+                    # plottable = torch.cat((images, reconstruction))
+                    # grid = make_grid(plottable, nrow=2)
+                    # writer.add_image('Val/images', grid, epoch)
 
                     writer.flush()
                     writer.close()
