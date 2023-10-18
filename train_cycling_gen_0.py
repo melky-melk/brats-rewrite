@@ -268,7 +268,7 @@ def main(args, timer):
                     timer = TimestampedTimer("Start evaluation")
                     timer, metrics = evaluate_generator(
                         args, epoch, generator, discriminator, optimizer_g, optimizer_d, train_sampler, val_sampler,
-                        scaler_g, scaler_d, train_loader, val_loader, perceptual_loss, adv_loss, device, timer, metrics
+                        scaler_g, scaler_d, val_loader, device, timer, metrics
                     )
                     timer.report(f'evaluating generator for epoch {epoch}')
 
