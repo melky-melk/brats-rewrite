@@ -7,6 +7,7 @@ import utils
 from cycling_utils import atomic_torch_save
 from torch.utils.tensorboard import SummaryWriter
 from generative.losses.adversarial_loss import PatchAdversarialLoss
+from torchvision.utils import make_grid
 # tb_path = "/mnt/Client/StrongUniversity/USYD-04/usyd04_adam/output_brats_mri_2d_gen/tb"
 tb_path = "/mnt/Client/Ctan682hia6krkvbghfcwq2mtmmnzsxa/ctactafmnaa6edh5dendtkiwzdi5fosy"
 
@@ -76,8 +77,6 @@ def train_generator_one_epoch(
 
     # these are going to be very different between the models
     for step, batch in enumerate(train_loader):
-        if batch >= 2:
-            break 
         
         images = batch["image"].to(device)
         timer.report(f'train batch {train_step} to device')
@@ -314,17 +313,17 @@ def evaluate_generator(
                     writer = SummaryWriter(log_dir=args.tboard_path)
                     writer.add_scalar("Val/loss", val_loss, epoch)
 
-                    # images_list = torch.zeros((11*6, *images.shape[1:]), device=device, dtype=images.dtype)
-                    # reconstruction_list = torch.zeros((11*6, *reconstruction.shape[1:]), device=device, dtype=reconstruction.dtype)
-                    # dist.all_gather_into_tensor(images_list, images.clone())
-                    # dist.all_gather_into_tensor(reconstruction_list, reconstruction)
-                    # plottable = torch.cat((images_list[0:5],reconstruction_list[0:5]))
-                    # plottable = (plottable * 255).to(torch.uint8)
+                    images_list = torch.zeros((11*6, *images.shape[1:]), device=device, dtype=images.dtype)
+                    reconstruction_list = torch.zeros((11*6, *reconstruction.shape[1:]), device=device, dtype=reconstruction.dtype)
+                    dist.all_gather_into_tensor(images_list, images.clone())
+                    dist.all_gather_into_tensor(reconstruction_list, reconstruction)
+                    plottable = torch.cat((images_list[0:5],reconstruction_list[0:5]))
+                    plottable = (plottable * 255).to(torch.uint8)
 
 
-                    # plottable = torch.cat((images, reconstruction))
-                    # grid = make_grid(plottable, nrow=2)
-                    # writer.add_image('Val/images', grid, epoch)
+                    plottable = torch.cat((images, reconstruction))
+                    grid = make_grid(plottable, nrow=2)
+                    writer.add_image('Val/images', grid, epoch)
 
                     writer.flush()
                     writer.close()
