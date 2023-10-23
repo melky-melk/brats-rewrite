@@ -311,15 +311,19 @@ def evaluate_generator(
                 if utils.is_main_process():
 
                     writer = SummaryWriter(log_dir=args.tboard_path)
+                    # makes a graph for the vakluy=e losses
                     writer.add_scalar("Val/loss", val_loss, epoch)
 
-                    images_list = torch.zeros((11*6, *images.shape[1:]), device=device, dtype=images.dtype)
-                    reconstruction_list = torch.zeros((11*6, *reconstruction.shape[1:]), device=device, dtype=reconstruction.dtype)
-                    dist.all_gather_into_tensor(images_list, images.clone())
-                    dist.all_gather_into_tensor(reconstruction_list, reconstruction)
-                    plottable = torch.cat((images_list[0:5],reconstruction_list[0:5]))
-                    plottable = (plottable * 255).to(torch.uint8)
+                    # making a tensor the size of the images
+                    # images_list = torch.zeros((11*6, *images.shape[1:]), device=device, dtype=images.dtype)
+                    # dist.all_gather_into_tensor(images_list, images.clone())
 
+                    # # making a plotting table for all of the reconstructions
+                    # reconstruction_list = torch.zeros((11*6, *reconstruction.shape[1:]), device=device, dtype=reconstruction.dtype)
+                    # dist.all_gather_into_tensor(reconstruction_list, reconstruction)
+
+                    # plottable = torch.cat((images_list[0:5],reconstruction_list[0:5]))
+                    # plottable = (plottable * 255).to(torch.uint8)
 
                     plottable = torch.cat((images, reconstruction))
                     grid = make_grid(plottable, nrow=2)
