@@ -325,9 +325,9 @@ def evaluate_generator(
                     # plottable = torch.cat((images_list[0:5],reconstruction_list[0:5]))
                     # plottable = (plottable * 255).to(torch.uint8)
 
-                    plottable = torch.cat((images, reconstruction))
-                    grid = make_grid(plottable, nrow=2)
-                    writer.add_image('Val/images', grid, epoch)
+                   # plottable = torch.cat((images, reconstruction))
+                    #grid = make_grid(plottable, nrow=2)
+                    #writer.add_image('Val/images', grid, epoch)
 
                     writer.flush()
                     writer.close()
