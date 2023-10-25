@@ -1,0 +1,6 @@
+experiment_name="pancreas_ct_dints"
+gpu_type="24GB VRAM GPU"
+nnodes = 2
+venv_path = "/mnt/Client/Mcoh58mtajs3mkdzfwxgxfqavlweuyda/mcomcod5wpd5fqkbeynb4n2mmndsagja/.venv/bin/activate"
+output_path = "/mnt/Client/Mcoh58mtajs3mkdzfwxgxfqavlweuyda/mcomcod5wpd5fqkbeynb4n2mmndsagja/output_pancreas_dints"
+command="search.py --resume $OUTPUT_PATH/checkpoint.isc --tboard-path $OUTPUT_PATH/tb"
