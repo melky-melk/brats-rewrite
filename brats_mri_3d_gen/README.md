@@ -31,8 +31,4 @@ this should install all the generative files and the readers
 
 using the new isc you need to reinstall CUDA and torch since a new update came out that makes the previous nvidia drivers incompatible with torch 2.1.0
 
-<<<<<<< HEAD:brats_mri_3d_gen/README.md
 `pip install torch==2.0.1+cu118 torchvision==0.15.2+cu118 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118`
-=======
-`pip install torch==2.0.1+cu118 torchvision==0.15.2+cu118 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118`
->>>>>>> e2d2d400a95ea2453aebe419e1ea2dd8d7435f2f:README.md
